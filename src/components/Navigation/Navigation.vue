@@ -13,9 +13,9 @@
 
       <!-- Favorite beers -->
       <v-toolbar-items>
-        <v-btn text to="/favorites" class="px-2 text-uppercase">
+        <v-btn text to="/favorites">
           <font-awesome-icon :icon="['fas', 'heart']" color="red" size="2x"/>
-          <span class="ml-2">Favoris</span>
+          <span style="margin-left: 3px;">Favoris</span>
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
