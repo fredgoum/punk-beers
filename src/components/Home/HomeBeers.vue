@@ -4,7 +4,7 @@
     <v-container fluid>
       <v-row>
         <v-col v-for="beer in beers" :key="beer.id" xl="3" lg="3" md="3" sm="4" xs="6" cols="12">
-          <home-beers-beer :beer="beer"></home-beers-beer>
+          <home-beers-beer :beer="beer" @updateFavorites="updateFavorites(beer.id)"></home-beers-beer>
         </v-col>
       </v-row>
     </v-container>
@@ -31,6 +31,7 @@ export default {
       dataLoaded: false,
       currentPage: 1,
       totalPages: 10,
+      favoriteBeers: [],
     };
   },
   created() {
@@ -54,6 +55,16 @@ export default {
       }).catch((message) => {
         console.log(message);
       });
+    },
+    // Update favorite beers list
+    updateFavorites(beerId) {
+      if (! this.favoriteBeers.find((id) => id === beerId)) { // add beer to favorites
+        this.favoriteBeers.push(beerId);
+      } else { // remove beer from favorites
+        const index = this.favoriteBeers.indexOf(beerId);
+        if (index > -1) this.favoriteBeers.splice(index, 1);
+      }
+      this.$store.commit('updateFavoriteBeers', this.favoriteBeers);
     },
   },
 };
