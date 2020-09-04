@@ -1,6 +1,6 @@
 <template>
-  <!-- Display of the beers list -->
-  <div v-show="dataLoaded && beers.length">
+  <div v-show="dataLoaded && beers.length" style="padding-bottom: 60px;">
+    <!-- Display of the beers list -->
     <v-container fluid>
       <v-row>
         <v-col v-for="beer in beers" :key="beer.id" xl="3" lg="3" md="3" sm="4" xs="6" cols="12">
@@ -8,6 +8,11 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <!-- Pagination -->
+    <v-pagination v-model="currentPage" :length="totalPages" color="#0169aa"
+                  @input="loadBeers()">
+    </v-pagination>
   </div>
 </template>
 
@@ -24,15 +29,32 @@ export default {
     return {
       beers: [],
       dataLoaded: false,
+      currentPage: 1,
+      totalPages: 10,
     };
   },
   created() {
-    ApiSrv.call('GET').then((response) => {
-      this.beers = response;
-      this.dataLoaded = true;
-    }).catch((message) => {
-      console.log(message);
-    });
+    this.loadBeers();
+  },
+  methods: {
+    // load beers list for the current page
+    loadBeers() {
+      const apiUrl = this.apiUrl(this.currentPage);
+      this.apiCall(apiUrl);
+    },
+    // return url corresponding to current page
+    apiUrl(currentPage) {
+      return `https://api.punkapi.com/v2/beers?page=${currentPage}&per_page=16`;
+    },
+    // load api data of beers
+    apiCall(apiUrl) {
+      ApiSrv.call('GET', apiUrl).then((response) => {
+        this.beers = response;
+        this.dataLoaded = true;
+      }).catch((message) => {
+        console.log(message);
+      });
+    },
   },
 };
 </script>

@@ -1,10 +1,8 @@
 // Gets API data from Punk Beers API
-async function call(method) {
+async function call(method, url) {
   let apiData = [];
   if (method === 'GET') {
     try {
-      const url = 'https://api.punkapi.com/v2/beers?brewed_before=11-2012&abv_gt=6';
-
       const res = await fetch(url);
       if (! res.ok) {
         throw new Error(res.status);
