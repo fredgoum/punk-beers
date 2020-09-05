@@ -40,12 +40,8 @@ export default {
   methods: {
     // load beers list for the current page
     loadBeers() {
-      const apiUrl = this.apiUrl(this.currentPage);
+      const apiUrl = `https://api.punkapi.com/v2/beers?page=${this.currentPage}&per_page=16`;
       this.apiCall(apiUrl);
-    },
-    // return url corresponding to current page
-    apiUrl(currentPage) {
-      return `https://api.punkapi.com/v2/beers?page=${currentPage}&per_page=16`;
     },
     // load api data of beers
     apiCall(apiUrl) {

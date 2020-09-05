@@ -6,8 +6,16 @@
     <!-- Content Page  -->
     <div style="display: flex; background-color: #faf6dc; font-size: 13px; border: 1px solid #0169aa;">
       <!-- Beer image -->
-      <div style="text-align: center; background-color: white; width: 60%;">
-        <img alt="Beer Image" :src="beer.image_url" style="height: 420px; margin: 10px;">
+      <div style="position: relative; background-color: white; width: 60%; ">
+        <div style="text-align: center;">
+          <img alt="Beer Image" :src="beer.image_url" style="height: 420px; margin: 10px;">
+        </div>
+        <div style="position: absolute; top: 8px; right: 30px;">
+
+            <!-- Btn add/remove beer from favorites -->
+            <favorite-icon @set-favorite="updateFavorites"></favorite-icon>
+
+        </div>
       </div>
       <!-- Beer details -->
       <div style="width: 40%; margin: 10px;">
@@ -72,6 +80,9 @@
       </div>
     </div>
 
+    <!-- Display saving message -->
+    <saving-bar :snackbar="snackbar" :is-favorite="isFavorite"></saving-bar>
+
     <!-- Footer page -->
     <about></about>
   </div>
@@ -86,20 +97,26 @@
 </style>
 
 <script>
+import ApiSrv from '@/js/services/ApiSrv';
 import Navigation from '@/components/Navigation/Navigation.vue';
 import About from '@/components/About/About.vue';
-import ApiSrv from '@/js/services/ApiSrv';
+import FavoriteIcon from '@/components/Reusables/FavoriteIcon.vue';
+import SavingBar from '@/components/Reusables/SavingBar.vue';
 
 export default {
   components: {
     Navigation,
     About,
+    FavoriteIcon,
+    SavingBar,
   },
 
   data() {
     return {
       beer: {},
       dataLoaded: false,
+      isFavorite: false,
+      snackbar: { value: false },
     };
   },
   created() {
@@ -112,6 +129,23 @@ export default {
     }).catch((message) => {
       console.log(message);
     });
+  },
+  methods: {
+    // Update favorite beers list
+    updateFavorites(value) {
+      this.isFavorite = value;
+      this.snackbar.value = true;
+      const beerId = parseInt(this.$route.params.id, 10);
+      const beers = this.$store.state.favoriteBeers;
+      console.log(beers);
+      if (! beers.find((id) => id === beerId)) { // add beer to favorites
+        beers.push(beerId);
+      } else { // remove beer from favorites
+        const index = beers.indexOf(beerId);
+        if (index > -1) beers.splice(index, 1);
+      }
+      this.$store.commit('updateFavoriteBeers', beers);
+    },
   },
 };
 </script>

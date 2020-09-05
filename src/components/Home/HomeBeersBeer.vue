@@ -14,19 +14,11 @@
 
       <!-- Btn add/remove beer from favorites -->
       <div style="width: 10%; margin-top: 3px;">
-        <font-awesome-icon :icon="['fas', 'heart']" :color="isFavorite ? '#0169aa' : 'gray'" size="lg" style="cursor: pointer;"
-          @click="updateFavorites()">
-        </font-awesome-icon>
+        <favorite-icon @set-favorite="updateFavorites"></favorite-icon>
       </div>
 
-      <!-- Display action message -->
-      <v-snackbar v-model="snackbar" :color="isFavorite ? '#006400' : '#EC241E'" shaped right timeout=1500>
-        <span v-if="isFavorite">Beer added to favorites</span>
-        <span v-else>Beer remove from favorites</span>
-        <template v-slot:action="{ attrs }">
-          <v-btn color="red" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
-        </template>
-      </v-snackbar>
+      <!-- Display saving message -->
+      <saving-bar :snackbar="snackbar" :is-favorite="isFavorite"></saving-bar>
     </div>
   </div>
 </template>
@@ -44,15 +36,22 @@
 
 <script>
 import commonfunctions from '@/js/commonfunctions';
+import FavoriteIcon from '@/components/Reusables/FavoriteIcon.vue';
+import SavingBar from '@/components/Reusables/SavingBar.vue';
 
 export default {
+  components: {
+    FavoriteIcon,
+    SavingBar,
+  },
+
   props: {
     beer: { required: true, type: Object },
   },
   data() {
     return {
       isFavorite: false,
-      snackbar: false,
+      snackbar: { value: false },
     };
   },
   methods: {
@@ -61,9 +60,9 @@ export default {
       return `beer/${this.beer.id}/${commonfunctions.slugify(this.beer.name)}`;
     },
     // Update favorite beers list
-    updateFavorites() {
-      this.isFavorite = ! this.isFavorite;
-      this.snackbar = true;
+    updateFavorites(value) {
+      this.isFavorite = value;
+      this.snackbar.value = true;
       this.$emit('updateFavorites');
     },
   },
