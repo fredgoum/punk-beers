@@ -80,6 +80,19 @@
       </div>
     </div>
 
+    <!-- Navigation prev/next -->
+    <div style="margin-top: 25px; text-align: center;">
+      <v-btn :disabled="beer.id === 1" rounded
+             style="background-color: #0169aa; color: white; width: 130px; margin-right: 10px;"
+             @click="loadPreviousBeer()">
+        Previous
+      </v-btn>
+      <v-btn rounded style="background-color: #0169aa; color: white; width: 130px;"
+             @click="loadNextBeer()">
+        Next
+      </v-btn>
+    </div>
+
     <!-- Display saving message -->
     <saving-bar :snackbar="snackbar" :is-favorite="isFavorite"></saving-bar>
 
@@ -131,6 +144,25 @@ export default {
     });
   },
   methods: {
+    loadPreviousBeer() {
+      const previousBeerId = this.beer.id - 1;
+      this.apiCall(previousBeerId);
+    },
+    loadNextBeer() {
+      const nextBeerId = this.beer.id + 1;
+      this.apiCall(nextBeerId);
+    },
+    // Get api data of beer
+    apiCall(beerId) {
+      const apiUrl = `https://api.punkapi.com/v2/beers/${beerId}`;
+      ApiSrv.call('GET', apiUrl).then((response) => {
+        const data = response[0];
+        this.beer = data;
+        this.dataLoaded = true;
+      }).catch((message) => {
+        console.log(message);
+      });
+    },
     // Update favorite beers list
     updateFavorites(value) {
       this.isFavorite = value;

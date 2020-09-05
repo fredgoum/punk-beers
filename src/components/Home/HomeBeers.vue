@@ -40,11 +40,11 @@ export default {
   methods: {
     // load beers list for the current page
     loadBeers() {
-      const apiUrl = `https://api.punkapi.com/v2/beers?page=${this.currentPage}&per_page=16`;
-      this.apiCall(apiUrl);
+      this.apiCall(this.currentPage);
     },
     // load api data of beers
-    apiCall(apiUrl) {
+    apiCall(currentPage) {
+      const apiUrl = `https://api.punkapi.com/v2/beers?page=${currentPage}&per_page=16`;
       ApiSrv.call('GET', apiUrl).then((response) => {
         this.beers = response;
         this.dataLoaded = true;

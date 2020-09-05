@@ -3,7 +3,7 @@
     <div style="display: flex; background-color: #faf6dc; height: 120px;">
       <div style="width: 90%;">
         <!-- Beer image -->
-        <router-link :to="beerLink(beer)" style="">
+        <router-link :to="beerLink(beer)">
           <div style="background-color: #fdfdfd;">
             <img :src="beer.image_url" alt="Beer Image" style="height: 100px;">
           </div>
