@@ -1,6 +1,6 @@
 <template>
   <!-- Navigation bar  -->
-  <v-app-bar dense elevate-on-scroll color="#faf6dc" style="border-bottom: 5px solid #0169aa !important;">
+  <v-app-bar dense color="#faf6dc" style="border-bottom: 5px solid #0169aa !important;">
     <router-link to="/">
       <img src="../../images/logo.png" alt="logo app" style="height: 36px;">
     </router-link>
