@@ -1,18 +1,25 @@
 <template>
-  <div v-show="dataLoaded && beers.length" style="padding-bottom: 60px;">
-    <!-- Display of the beers list -->
-    <v-container fluid>
-      <v-row>
-        <v-col v-for="beer in beers" :key="beer.id" xl="3" lg="3" md="3" sm="4" xs="6" cols="12">
-          <home-beers-beer :beer="beer" @updateFavorites="updateFavorites(beer.id)"></home-beers-beer>
-        </v-col>
-      </v-row>
-    </v-container>
+  <div>
+    <!-- Progress for data loading -->
+    <div v-if="! dataLoaded" style="text-align: center;">
+      <v-progress-circular :size="80" :width="7" indeterminate color="#0169aa" style="padding-bottom: 180px;"></v-progress-circular>
+    </div>
 
-    <!-- Pagination -->
-    <v-pagination v-model="currentPage" :length="totalPages" color="#0169aa"
-                  @input="loadBeers()">
-    </v-pagination>
+    <!-- Display of the beers list -->
+    <div v-show="dataLoaded && beers.length" style="padding-bottom: 60px;">
+      <v-container fluid>
+        <v-row>
+          <v-col v-for="beer in beers" :key="beer.id" xl="3" lg="3" md="3" sm="4" xs="6" cols="12">
+            <home-beers-beer :beer="beer" @updateFavorites="updateFavorites(beer.id)"></home-beers-beer>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <!-- Pagination -->
+      <v-pagination v-model="currentPage" :length="totalPages" color="#0169aa"
+                    @input="loadBeers()">
+      </v-pagination>
+    </div>
   </div>
 </template>
 

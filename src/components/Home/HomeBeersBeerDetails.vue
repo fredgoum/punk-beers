@@ -3,6 +3,11 @@
     <!-- Navigation bar  -->
     <navigation></navigation>
 
+    <!-- Progress for data loading -->
+    <div v-if="! dataLoaded" style="text-align: center;">
+      <v-progress-circular :size="80" :width="7" indeterminate color="#0169aa" style="padding-bottom: 180px;"></v-progress-circular>
+    </div>
+
     <!-- Content Page  -->
     <div v-if="dataLoaded" style="margin-top: 60px;">
       <div style="display: flex; background-color: #faf6dc; font-size: 13px; border: 1px solid #0169aa;">
