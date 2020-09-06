@@ -31,20 +31,15 @@ export default {
       dataLoaded: false,
       currentPage: 1,
       totalPages: 10,
-      favoriteBeers: [],
     };
   },
   created() {
-    this.loadBeers();
+    this.loadBeers(this.currentPage);
   },
   methods: {
     // load beers list for the current page
     loadBeers() {
-      this.apiCall(this.currentPage);
-    },
-    // load api data of beers
-    apiCall(currentPage) {
-      const apiUrl = `https://api.punkapi.com/v2/beers?page=${currentPage}&per_page=16`;
+      const apiUrl = `https://api.punkapi.com/v2/beers?page=${this.currentPage}&per_page=16`;
       ApiSrv.call('GET', apiUrl).then((response) => {
         this.beers = response;
         this.dataLoaded = true;
@@ -54,13 +49,14 @@ export default {
     },
     // Update favorite beers list
     updateFavorites(beerId) {
-      if (! this.favoriteBeers.find((id) => id === beerId)) { // add beer to favorites
-        this.favoriteBeers.push(beerId);
+      const beers = this.$store.state.favoriteBeers;
+      if (! beers.find((id) => id === beerId)) { // add beer to favorites
+        beers.push(beerId);
       } else { // remove beer from favorites
-        const index = this.favoriteBeers.indexOf(beerId);
-        if (index > -1) this.favoriteBeers.splice(index, 1);
+        const index = beers.indexOf(beerId);
+        if (index > -1) beers.splice(index, 1);
       }
-      this.$store.commit('updateFavoriteBeers', this.favoriteBeers);
+      this.$store.commit('updateFavoriteBeers', beers);
     },
   },
 };

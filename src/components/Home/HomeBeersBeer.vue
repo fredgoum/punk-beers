@@ -14,7 +14,7 @@
 
       <!-- Btn add/remove beer from favorites -->
       <div style="width: 10%; margin-top: 3px;">
-        <favorite-icon @set-favorite="updateFavorites"></favorite-icon>
+        <favorite-icon :beer="beer" @set-favorite="updateFavorites"></favorite-icon>
       </div>
 
       <!-- Display saving message -->

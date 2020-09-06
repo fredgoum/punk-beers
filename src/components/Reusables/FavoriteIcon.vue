@@ -7,15 +7,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isFavorite: false,
-    };
+  props: {
+    beer: { default: null, type: Object },
+  },
+  computed: {
+    isFavorite() { return ! ! this.$store.state.favoriteBeers.find((id) => id === this.beer.id); },
   },
   methods: {
     setFavorite() {
-      this.isFavorite = ! this.isFavorite;
-      this.$emit('set-favorite', this.isFavorite);
+      this.$emit('set-favorite', ! this.isFavorite);
     },
   },
 };
