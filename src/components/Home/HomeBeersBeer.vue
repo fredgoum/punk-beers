@@ -1,6 +1,6 @@
 <template>
   <div class="beerpreview">
-    <div style="display: flex; background-color: #faf6dc; height: 120px;">
+    <div style="display: flex; height: 120px;">
       <div style="width: 90%;">
         <!-- Beer image -->
         <router-link :to="beerLink(beer)">
@@ -9,7 +9,7 @@
           </div>
         </router-link>
         <!-- Beer name  -->
-        <div style="background-color: #faf6dc;">{{ beer.name }}</div>
+        <div>{{ beer.name }}</div>
       </div>
 
       <!-- Btn add/remove beer from favorites -->

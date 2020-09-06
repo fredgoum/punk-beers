@@ -10,7 +10,7 @@
 
     <!-- Content Page  -->
     <div v-if="dataLoaded" style="margin-top: 60px;">
-      <div style="display: flex; background-color: #faf6dc; font-size: 13px; border: 1px solid #0169aa;">
+      <div style="display: flex; background-color: #faf6dc; font-size: 13px; margin: 5px;">
         <!-- Beer image -->
         <div style="position: relative; background-color: white; width: 60%; ">
           <div style="text-align: center;">
@@ -87,7 +87,7 @@
       </div>
 
       <!-- Navigation prev/next -->
-      <div style="margin-top: 25px; text-align: center;">
+      <div style="margin-top: 25px; margin-bottom: 65px; text-align: center;">
         <v-btn :disabled="beer.id === 1" rounded
               style="background-color: #0169aa; color: white; width: 130px; margin-right: 10px;"
               @click="loadPreviousBeer()">

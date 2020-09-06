@@ -1,4 +1,7 @@
-// transforms text to lowercase
+/**
+ * Transforms text to lowercase
+ * @param {String} text string to transform
+ */
 function slugify(text) {
   return text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[àáâãäå]/g, 'a')
     .replace(/æ/g, 'ae')
